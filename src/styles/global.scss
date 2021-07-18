@@ -1,1 +1,25 @@
 @import "settings.scss";
+@import "typography.scss";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $base-font-family;
+  margin: 0;
+  padding: 0;
+  color: $base-font-color;
+  background: $base-background-color;
+  line-height: 1.7;
+  overflow-y: scroll;
+  min-height: 100vh;
+}
+
+a,
+a:hover,
+a:visited {
+  text-decoration: none;
+}

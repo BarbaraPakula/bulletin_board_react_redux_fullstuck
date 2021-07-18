@@ -2,5 +2,23 @@
   "cSpell.enabled": false,
   "blueprint.templatesPath": [
     "./dev/blueprint-templates"
-  ]
+  ],
+  "trailing-spaces.trimOnSave": true,
+  "editor.formatOnSave": true,
+  "prettier.jsxSingleQuote": true,
+  "prettier.singleQuote": true,
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.preferences.quoteStyle": "single",
+  "quokka.darkTheme.system.decorationAttachmentRenderOptions": {
+    "border": null,
+    "borderColor": null,
+    "fontStyle": null,
+    "fontWeight": null,
+    "textDecoration": null,
+    "color": "rgb(153, 153, 153)",
+    "backgroundColor": null,
+    "margin": "1.2em",
+    "width": null,
+    "height": null
+  }
 }
