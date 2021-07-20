@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { getStatus } from '../../../redux/userSwitcherRedux.js';
 
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -51,27 +52,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Component = ({ className, postsAll }) => {
-  const [login, setLogin] = useState(false);
+const Component = ({ className, postsAll, userStatus }) => {
   const [expanded, setExpanded] = React.useState(false);
 
   const classes = useStyles();
-  const handleChange = (event) => {
-    setLogin(!login);
-  };
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   return (
     <div className={clsx(className, styles.root)}>
-      <Link to='#' onClick={handleChange}>
-        {login ? 'Logout' : 'Login'}
-      </Link>
-
-      {login && (
-        <div >
-          <Link className={styles.addCard} to={'/post/add'} variant='subtitle1' color='secondary'>
+      {userStatus && (
+        <div>
+          <Link
+            className={styles.addCard}
+            to={'/post/add'}
+            variant='subtitle1'
+            color='secondary'
+          >
             <Fab
               size='small'
               color='secondary'
@@ -158,6 +157,7 @@ const Component = ({ className, postsAll }) => {
 
 Component.propTypes = {
   className: PropTypes.string,
+  userStatus: PropTypes.bool,
   postsAll: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
@@ -177,6 +177,7 @@ Component.propTypes = {
 
 const mapStateToProps = (state) => ({
   postsAll: getAll(state),
+  userStatus: getStatus(state),
 });
 
 // const mapDispatchToProps = dispatch => ({

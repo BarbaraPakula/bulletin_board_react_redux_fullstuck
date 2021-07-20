@@ -67,4 +67,7 @@ export const initialState = {
       error: false,
     },
   },
+  user: {
+    active: true,
+  },
 };

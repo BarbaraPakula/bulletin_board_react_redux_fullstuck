@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import styles from './Header.module.scss';
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import { connect } from 'react-redux';
+import { getStatus } from '../../../redux/userSwitcherRedux.js';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,9 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 import { green } from '@material-ui/core/colors';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,27 +28,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Component = ({ className, children }) => {
+const Component = ({ className, children, userStatus }) => {
   const classes = useStyles();
-  const [user, setUser] = useState(false);
-  const handleChange = (event) => {
-    setUser(event.target.checked);
-  };
-
   return (
     <div className={clsx(className, styles.root)}>
-      <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={user}
-              onChange={handleChange}
-              aria-label='login switch'
-            />
-          }
-          label={user ? 'Logout' : 'Login'}
-        />
-      </FormGroup>
       <AppBar position='static'>
         <Toolbar className={styles.toolbar}>
           <IconButton
@@ -66,7 +47,7 @@ const Component = ({ className, children }) => {
             Bulletin
           </Typography>
 
-          {!user && (
+          {!userStatus && (
             <div>
               <IconButton
                 aria-label='account of current user'
@@ -79,7 +60,7 @@ const Component = ({ className, children }) => {
               </IconButton>
             </div>
           )}
-          {user && (
+          {userStatus && (
             <div>
               <IconButton
                 aria-label='account of current user'
@@ -90,7 +71,7 @@ const Component = ({ className, children }) => {
                 label={'dddd'}
               >
                 <Link to={'/'} className={styles.link}>
-                  Yours  adds
+                  Yours adds
                 </Link>
                 <AccountCircle />
                 Logout
@@ -99,7 +80,6 @@ const Component = ({ className, children }) => {
           )}
         </Toolbar>
       </AppBar>
-
       {children}
     </div>
   );
@@ -108,20 +88,21 @@ const Component = ({ className, children }) => {
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  userStatus: PropTypes.bool,
 };
 
-// const mapStateToProps = (state) => ({
-//   user: state.log,
-// });
+const mapStateToProps = (state) => ({
+  userStatus: getStatus(state),
+});
 
 // const mapDispatchToProps = dispatch => ({
 //   someAction: arg => dispatch(reduxActionCreator(arg)),
 // });
 
-// const Container = connect(mapStateToProps)(Component);
+const Container = connect(mapStateToProps)(Component);
 
 export {
-  Component as Header,
-  // Container as Header,
+  // Component as Header,
+  Container as Header,
   Component as HeaderComponent,
 };
