@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import styles from './Header.module.scss';
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
-
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -32,9 +32,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Component = ({ className, children }) => {
   const classes = useStyles();
-  const [log, setLogin] = React.useState();
+  const [user, setUser] = useState(false);
   const handleChange = (event) => {
-    setLogin(event.target.checked);
+    setUser(event.target.checked);
   };
 
   return (
@@ -43,16 +43,16 @@ const Component = ({ className, children }) => {
         <FormControlLabel
           control={
             <Switch
-              checked={log}
+              checked={user}
               onChange={handleChange}
               aria-label='login switch'
             />
           }
-          label={log ? 'Logout' : 'Login'}
+          label={user ? 'Logout' : 'Login'}
         />
       </FormGroup>
       <AppBar position='static'>
-        <Toolbar>
+        <Toolbar className={styles.toolbar}>
           <IconButton
             edge='start'
             className={classes.menuButton}
@@ -66,7 +66,7 @@ const Component = ({ className, children }) => {
             Bulletin
           </Typography>
 
-          {!log && (
+          {!user && (
             <div>
               <IconButton
                 aria-label='account of current user'
@@ -79,7 +79,7 @@ const Component = ({ className, children }) => {
               </IconButton>
             </div>
           )}
-          {log && (
+          {user && (
             <div>
               <IconButton
                 aria-label='account of current user'
@@ -87,7 +87,11 @@ const Component = ({ className, children }) => {
                 aria-haspopup='true'
                 color='inherit'
                 href='/'
+                label={'dddd'}
               >
+                <Link to={'/'} className={styles.link}>
+                  Yours  adds
+                </Link>
                 <AccountCircle />
                 Logout
               </IconButton>
@@ -106,15 +110,15 @@ Component.propTypes = {
   className: PropTypes.string,
 };
 
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
+// const mapStateToProps = (state) => ({
+//   user: state.log,
 // });
 
 // const mapDispatchToProps = dispatch => ({
 //   someAction: arg => dispatch(reduxActionCreator(arg)),
 // });
 
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+// const Container = connect(mapStateToProps)(Component);
 
 export {
   Component as Header,
