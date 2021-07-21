@@ -1,4 +1,11 @@
 @import '../../../styles/settings.scss';
 
-// .root {
-// }
+.root {
+  padding: 20px;
+  .title {
+    color: red;
+  }
+  .button {
+    margin: 20px;
+  }
+}

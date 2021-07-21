@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import styles from './Header.module.scss';
 import { connect } from 'react-redux';
 import { getStatus } from '../../../redux/userSwitcherRedux.js';
-
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -27,19 +27,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Component = ({ className, children}) => {
+const Component = ({ className, children }) => {
   const classes = useStyles();
   const [userStatus, setUserStatus] = useState(true);
 
   const handleOnChange = (event) => {
     console.log('event w funkcji', event, 'userStatus:', userStatus);
     console.log('ddd');
-    if(event === 'true') {
+    if (event === 'true') {
       setUserStatus(true);
     } else {
       setUserStatus(false);
     }
-
   };
 
   return (
@@ -60,7 +59,8 @@ const Component = ({ className, children}) => {
             className={classes.menuButton}
             color='inherit'
             aria-label='menu'
-            href='/'
+            component={Link}
+            to={'/'}
           >
             <HomeIcon style={{ color: green[500] }} />
           </IconButton>
@@ -88,12 +88,17 @@ const Component = ({ className, children}) => {
                 aria-controls='menu-appbar'
                 aria-haspopup='true'
                 color='inherit'
-                href='/'
-                label={'dddd'}
+                component={Link}
+                to={'/'}
               >
-                <Link to={'/'} className={styles.link}>
-                  Yours adds
-                </Link>
+                <Button
+                  variant='contained'
+                  color='secondary'
+                  component={Link}
+                  to={'/youradds'}
+                >
+                  Go toyour adds
+                </Button>
                 <AccountCircle />
                 Logout
               </IconButton>
