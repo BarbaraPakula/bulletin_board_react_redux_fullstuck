@@ -83,6 +83,14 @@ const Component = ({ className, children }) => {
           )}
           {userStatus && (
             <div>
+              <Button
+                variant='contained'
+                color='secondary'
+                component={Link}
+                to={'/youradds'}
+              >
+                Go toyour adds
+              </Button>
               <IconButton
                 aria-label='account of current user'
                 aria-controls='menu-appbar'
@@ -91,14 +99,6 @@ const Component = ({ className, children }) => {
                 component={Link}
                 to={'/'}
               >
-                <Button
-                  variant='contained'
-                  color='secondary'
-                  component={Link}
-                  to={'/youradds'}
-                >
-                  Go toyour adds
-                </Button>
                 <AccountCircle />
                 Logout
               </IconButton>
