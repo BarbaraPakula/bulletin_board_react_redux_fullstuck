@@ -98,7 +98,7 @@ const Component = ({ className, postsAll, userStatus }) => {
                   subheader={post.datePublication}
                 />
 
-                <CardActionArea>
+                <CardActionArea href={`/post/${post.id}`}>
                   <CardMedia
                     className={styles.image}
                     component='img'
