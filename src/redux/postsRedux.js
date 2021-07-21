@@ -1,6 +1,6 @@
 /* selectors */
 export const getAll = ({ posts }) => posts.data;
-export const getOnePost = ({posts}, id) => posts.data.find(post => post.id == id);
+export const getOnePost = ({posts}, id) => posts.data.find(post => post.id.toString() === id);
 export const getPostById = ({ posts }, _id) => {
   return posts.data.filter((post) => post._id === _id)[0];
 };

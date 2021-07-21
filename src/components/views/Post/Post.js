@@ -105,21 +105,7 @@ const Component = ({ className, post }) => {
 Component.propTypes = {
   className: PropTypes.string,
   params: PropTypes.object,
-  post: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      title: PropTypes.string,
-      content: PropTypes.string,
-      datePublication: PropTypes.string,
-      dateLastUpdate: PropTypes.string,
-      email: PropTypes.string,
-      status: PropTypes.string,
-      image: PropTypes.any,
-      price: PropTypes.number,
-      phone: PropTypes.string,
-      location: PropTypes.string,
-    })
-  ),
+  post: PropTypes.object,
 };
 
 const mapStateToProps = (state, props) => ({
