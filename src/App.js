@@ -13,6 +13,7 @@ import { Post } from './components/views/Post/Post';
 import { PostEdit } from './components/views/PostEdit/PostEdit';
 import { PostAdd } from './components/views/PostAdd/PostAdd';
 import { NotFound } from './components/views/NotFound/NotFound';
+import {Switcher} from './components/common/Switcher/Switcher';
 
 const theme = createTheme({
   palette: {
@@ -26,6 +27,7 @@ const App = (props) => (
       <StylesProvider injectFirst>
         <ThemeProvider theme={theme}>
           <CssBaseline />
+          <Switcher />
           <MainLayout>
             <Switch>
               <Route exact path='/' component={Homepage} />

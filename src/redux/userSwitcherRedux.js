@@ -20,7 +20,7 @@ export const reducer = (statePart = [], action = {}) => {
     case GET_USER_STATUS: {
       return {
         ...statePart,
-        active: action.payload,
+        active: action.payload.active,
       };
     }
     default:
