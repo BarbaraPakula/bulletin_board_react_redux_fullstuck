@@ -131,7 +131,7 @@ Component.propTypes = {
   className: PropTypes.string,
   match: PropTypes.object,
   params: PropTypes.object,
-  post: PropTypes.arrayOf(
+  post: PropTypes.objectOf(
     PropTypes.shape({
       id: PropTypes.number,
       title: PropTypes.string,
