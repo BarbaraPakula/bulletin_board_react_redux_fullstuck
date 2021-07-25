@@ -1,7 +1,6 @@
 /* eslint-disable linebreak-style */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getStatus } from '../../../redux/userSwitcherRedux.js';
 
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -22,8 +21,8 @@ import Collapse from '@material-ui/core/Collapse';
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
-import { getAll } from '../../../redux/postsRedux';
+import { getAll, fetchPublished } from '../../../redux/postsRedux';
+import { getStatus } from '../../../redux/userSwitcherRedux.js';
 
 import styles from './Homepage.module.scss';
 import { makeStyles } from '@material-ui/core/styles';
@@ -53,14 +52,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Component = ({ className, postsAll, userStatus }) => {
+const Component = ({
+  className,
+  postsAll,
+  userStatus,
+  fetchPublishedPosts,
+}) => {
   const [expanded, setExpanded] = React.useState(false);
-
   const classes = useStyles();
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  fetchPublishedPosts();
 
   return (
     <div className={clsx(className, styles.root)}>
@@ -158,6 +162,7 @@ const Component = ({ className, postsAll, userStatus }) => {
 
 Component.propTypes = {
   className: PropTypes.string,
+  fetchPublishedPosts: PropTypes.func,
   userStatus: PropTypes.bool,
   postsAll: PropTypes.arrayOf(
     PropTypes.shape({
@@ -181,11 +186,11 @@ const mapStateToProps = (state) => ({
   userStatus: getStatus(state),
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   loadPosts: () => dispatch(loadPosts()),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  fetchPublishedPosts: () => dispatch(fetchPublished()),
+});
 
-const Container = connect(mapStateToProps)(Component);
+const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
   // Component as Homepage,
