@@ -3,10 +3,21 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose');
-
-const postsRoutes = require('./routes/post.routes');
+const passport = require('passport');
+const session = require('express-session');
+const passportSetup = require('./config/passport');
 
 const app = express();
+const postsRoutes = require('./routes/post.routes');
+const usersRoutes = require('./routes/user.routes');
+const authRoutes = require('./routes/auth.routes');
+
+require('dotenv').config();
+
+/* PASSPORT */
+app.use(session({ secret: 'anything' }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 /* MIDDLEWARE */
 app.use(cors());
@@ -15,6 +26,8 @@ app.use(express.urlencoded({ extended: false }));
 
 /* API ENDPOINTS */
 app.use('/api', postsRoutes);
+app.use('/api', usersRoutes);
+app.use('/auth', authRoutes);
 
 /* API ERROR PAGES */
 app.use('/api', (req, res) => {
