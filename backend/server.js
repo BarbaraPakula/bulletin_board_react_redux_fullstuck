@@ -5,7 +5,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
-const passportSetup = require('./config/passport');
+require('./config/passport');
 
 const app = express();
 const postsRoutes = require('./routes/post.routes');
@@ -36,15 +36,21 @@ app.use('/api', (req, res) => {
 
 /* REACT WEBSITE */
 app.use(express.static(path.join(__dirname, '../build')));
+app.use('/public/uploads', express.static(__dirname + '/public/uploads/'));
 app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'));
 });
 
 /* MONGOOSE */
-mongoose.connect('mongodb://localhost:27017/bulletinBoard', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+// mongoose.connect('mongodb://localhost:27017/bulletinBoard', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
+mongoose.connect(
+  `mongodb+srv://${process.env.mongoApp}:${process.env.mongoPass}@cluster0.q0xoi.mongodb.net/bulletinBoard?retryWrites=true&w=majority`,
+  { useNewUrlParser: true, useUnifiedTopology: true }
+);
+//
 const db = mongoose.connection;
 db.once('open', () => {
   console.log('Successfully connected to the database');
