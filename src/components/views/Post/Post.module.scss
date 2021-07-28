@@ -15,15 +15,19 @@
     flex-direction: column;
     padding-left: 25px;
     padding-right: 50px;
+    color: black;
 
     .postDescription {
       padding-bottom: 10px;
+
     }
 
     .postContact {
       display: flex;
       flex-direction: row;
       padding: 5px 0;
+      color: black;
+
 
       .contactIcon {
         width: 18px;
@@ -37,6 +41,8 @@
 
     .titleWrapper {
       display: flex;
+      color: black;
+
 
       .postStatus {
         color: $base-background-color;
@@ -46,6 +52,8 @@
       .postEdit {
         display: flex;
         flex-direction: row-reverse;
+
+        color: black;
 
         .editIcon {
           margin: auto;

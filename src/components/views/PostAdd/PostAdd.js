@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import styles from './PostAdd.module.scss';
 import { connect } from 'react-redux';
 import { getStatus } from '../../../redux/userSwitcherRedux.js';
+import { fetchAddPost} from '../../../redux/postsRedux';
 
 import { NotFound } from '../NotFound/NotFound.js';
 
@@ -120,7 +121,6 @@ class Component extends React.Component {
     return (
       <div className={clsx(className, styles.root)}>
         <h2>PostAdd</h2>
-        {/* {children} */}
         {userStatus === true ? (
           <Grid container align='center' justifyContent='center'>
             <Grid item align='center' xs={12} sm={9}>
@@ -254,11 +254,11 @@ const mapStateToProps = (state, props) => ({
   userStatus: getStatus(state),
 });
 
-// const mapDispatchToProps = (dispatch, props) => ({
-//   updatePost: (post) => dispatch(editPostRequest(post, props.match.params.id)),
-// });
+const mapDispatchToProps = dispatch => ({
+  addPost: (post) => dispatch(fetchAddPost(post)),
+});
 
-const Container = connect(mapStateToProps)(Component);
+const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
   // Component as PostAdd,

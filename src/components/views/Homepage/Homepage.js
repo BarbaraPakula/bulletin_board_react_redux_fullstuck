@@ -58,13 +58,16 @@ const Component = ({
   userStatus,
   fetchPublishedPosts,
 }) => {
+  React.useEffect(() => {
+    fetchPublishedPosts();
+  }, []);
+
+
   const [expanded, setExpanded] = React.useState(false);
   const classes = useStyles();
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
-  fetchPublishedPosts();
 
   return (
     <div className={clsx(className, styles.root)}>
@@ -87,7 +90,7 @@ const Component = ({
           </Link>
           <div className={styles.card}>
             {postsAll.map((post) => (
-              <Card key={post.id} className={styles.card__item}>
+              <Card key={post._id} className={styles.card__item}>
                 <CardHeader
                   avatar={
                     <Avatar aria-label='recipe' className={classes.avatar}>
@@ -103,11 +106,11 @@ const Component = ({
                   subheader={post.datePublication}
                 />
 
-                <CardActionArea href={`/post/${post.id}`}>
+                <CardActionArea href={`/post/${post._id}`}>
                   <CardMedia
                     className={styles.image}
                     component='img'
-                    image={post.image}
+                    image={post.photo}
                     title={post.title}
                   />
                   <CardContent>
@@ -116,7 +119,7 @@ const Component = ({
                       color='textSecondary'
                       component='p'
                     >
-                      {post.content}
+                      {post.text}
                     </Typography>
                     <div className={styles.price}>
                       <Typography component='p' variant='subtitle2'>
@@ -162,23 +165,9 @@ const Component = ({
 
 Component.propTypes = {
   className: PropTypes.string,
-  fetchPublishedPosts: PropTypes.func,
+  fetchPublishedPosts: PropTypes.any,
   userStatus: PropTypes.bool,
-  postsAll: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      title: PropTypes.string,
-      content: PropTypes.string,
-      datePublication: PropTypes.string,
-      dateLastUpdate: PropTypes.string,
-      email: PropTypes.string,
-      status: PropTypes.string,
-      image: PropTypes.string,
-      price: PropTypes.string,
-      phone: PropTypes.string,
-      location: PropTypes.string,
-    })
-  ),
+  postsAll: PropTypes.array,
 };
 
 const mapStateToProps = (state) => ({
@@ -192,8 +181,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
-export {
-  // Component as Homepage,
-  Container as Homepage,
-  Component as HomepageComponent,
-};
+export { Container as Homepage, Component as HomepageComponent };

@@ -1,40 +1,34 @@
 @import '../../../styles/settings.scss';
 
-@import '../../../styles/settings.scss';
-
 .root {
-  max-width: 1280px;
-  margin: auto;
+  .addContainer {
+    .paperCard {
+      padding: 20px;
 
-  .paper {
-    padding: 0 20px 20px 20px;
-    margin: 25px 20px -20px 20px;
+      &__item {
+        margin: 15px auto;
 
-    .btnSave {
-      margin-top: 20px;
-      height: 55px;
-      padding: 0 30px;
-      float: right;
+        input, textarea {
+          color: $base-background-color;
+        }
+      }
+
+      &__btn {
+        margin-top: 12px;
+      }
+
+      &__textError {
+        color: red;
+      }
+
+      &__link{
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
 
-    .icon {
-      padding-right: 5px;
-    }
-  }
-
-  .imageUploader {
-    margin: 25px 20px -30px 20px;
-  }
-
-  .textField {
-    margin-top: 20px;
-    margin-right: 20px;
-  }
-
-  .status {
-    margin-top: 20px;
-    margin-right: 20px;
-    float: right;
   }
 }
-
