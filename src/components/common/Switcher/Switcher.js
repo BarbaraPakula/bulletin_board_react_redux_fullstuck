@@ -11,16 +11,12 @@ class Component extends React.Component {
   handleOnChange = (event) => {
     const { userActiveChange, user } = this.props;
 
-
     if (event === 'true') {
       user.active = true;
       userActiveChange(user);
-      console.log( userActiveChange(user));
     } else {
       user.active = false;
       userActiveChange(user);
-      console.log( userActiveChange(user));
-
     }
   };
   render() {

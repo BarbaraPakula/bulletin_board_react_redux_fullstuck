@@ -1,5 +1,6 @@
 /* eslint-disable linebreak-style */
 import React from 'react';
+import { AUTH_URL } from '../../../config';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -51,15 +52,18 @@ const Component = ({ className, children, userStatus }) => {
 
           {!userStatus && (
             <div>
-              <IconButton
-                aria-label='account of current user'
-                aria-controls='menu-appbar'
-                aria-haspopup='true'
-                color='inherit'
-                href='https://google.com'
-              >
-                <AccountCircle /> Login
-              </IconButton>
+              <Link to={`${AUTH_URL}/google`}>
+
+                <IconButton
+                  aria-label='account of current user'
+                  aria-controls='menu-appbar'
+                  aria-haspopup='true'
+                  color='inherit'
+                >
+                  <AccountCircle />
+                  Login
+                </IconButton>
+              </Link>
             </div>
           )}
           {userStatus && (
@@ -78,7 +82,7 @@ const Component = ({ className, children, userStatus }) => {
                 aria-haspopup='true'
                 color='inherit'
                 component={Link}
-                to={'/'}
+                to={`http://localhost:8000/auth/logout`}
               >
                 <AccountCircle />
                 Logout
