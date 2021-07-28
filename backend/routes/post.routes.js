@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const upload = require('./../config/upload');
 const Post = require('../models/post.model');
+require('./../config/upload');
 
 router.get('/posts', async (req, res) => {
   try {
@@ -92,7 +93,7 @@ router.post('/posts/add', upload.single('photo'), async (req, res) => {
   }
 });
 
-router.put(`/posts/:id/edit`, upload.single('file'), async (req, res) => {
+router.put(`/posts/:id/edit`, upload.single('phot'), async (req, res) => {
   try {
     const {
       title,
@@ -101,7 +102,6 @@ router.put(`/posts/:id/edit`, upload.single('file'), async (req, res) => {
       created,
       updated,
       status,
-      photo,
       price,
       phone,
       location,
@@ -143,7 +143,7 @@ router.put(`/posts/:id/edit`, upload.single('file'), async (req, res) => {
       if (req.file !== undefined) {
         newNameFile = req.file.filename;
         const filePath = req.file.path;
-        console.log('filePath',filePath);
+        console.log('filePath', filePath);
         fileNameExt = filePath.split('.').slice(-1)[0];
         if (
           fileNameExt !== 'jpg' &&
@@ -153,8 +153,8 @@ router.put(`/posts/:id/edit`, upload.single('file'), async (req, res) => {
           throw new Error('Wrong format file');
         }
       }
-      console.log('newNameFile',newNameFile);
-      console.log('fileNameExt',fileNameExt);
+      console.log('newNameFile', newNameFile);
+      console.log('fileNameExt', fileNameExt);
 
       const editedPost = await Post.findById(req.body._id);
       console.log('editedPost', editedPost);
