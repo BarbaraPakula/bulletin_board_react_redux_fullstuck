@@ -23,7 +23,6 @@ import { fetchEditPost, getPost } from '../../../redux/postsRedux';
 import styles from './PostEdit.module.scss';
 
 class Component extends React.Component {
-
   state = {
     post: {
       _id: this.props.postById._id,
@@ -37,9 +36,9 @@ class Component extends React.Component {
       status: this.props.postById.status,
       created: this.props.postById.created,
       updated: this.props.postById.updated,
+      mail: this.props.postById.mail,
     },
   };
-
 
   handleChange = (event) => {
     const { post } = this.state;
@@ -89,7 +88,7 @@ class Component extends React.Component {
     ) {
       // post._id = uniqid();
       post.updated = new Date().toISOString();
-      editPost(post);
+      editPost(post._id, post);
 
       alert('Your post was edit.');
     }
@@ -155,7 +154,7 @@ class Component extends React.Component {
                   <Grid item xs={12} sm={9} className={styles.paperCard__item}>
                     <TextField
                       required
-                      defaultValue={postById.author}
+                      defaultValue={postById.mail}
                       name='author'
                       label='Email address'
                       fullWidth
@@ -262,7 +261,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  editPost: (post) => dispatch(fetchEditPost(post)),
+  editPost: (id, post) => dispatch(fetchEditPost(id, post)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);

@@ -77,7 +77,7 @@ export const fetchAddPost = (post) => {
   };
 };
 
-export const fetchEditPost = (post, id) => {
+export const fetchEditPost = (id, post) => {
   console.log('post w fetchEditPost', post);
   return (dispatch, getState) => {
     dispatch(fetchStarted());

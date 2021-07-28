@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
 const express = require('express');
 const router = express.Router();
-const upload = require('./../config/upload');
 const Post = require('../models/post.model');
-require('./../config/upload');
+
 
 router.get('/posts', async (req, res) => {
   try {
@@ -27,7 +26,7 @@ router.get('/posts/:id', async (req, res) => {
     res.status(500).json(err);
   }
 });
-router.post('/posts/add', upload.single('photo'), async (req, res) => {
+router.post('/posts/add', async (req, res) => {
   try {
     const {
       author,
@@ -93,10 +92,11 @@ router.post('/posts/add', upload.single('photo'), async (req, res) => {
   }
 });
 
-router.put(`/posts/:id/edit`, upload.single('phot'), async (req, res) => {
+router.put(`/posts/:id/edit`, async (req, res) => {
   try {
     const {
       title,
+      photo,
       text,
       author,
       created,
@@ -169,7 +169,7 @@ router.put(`/posts/:id/edit`, upload.single('phot'), async (req, res) => {
               status,
               created,
               updated,
-              photo: newNameFile,
+              photo,
               price,
               phone,
               location,
