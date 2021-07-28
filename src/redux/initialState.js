@@ -14,5 +14,6 @@ export const initialState = {
   },
   user: {
     active: true,
+    email: 'barbara.pakula@hotmail.com',
   },
 };

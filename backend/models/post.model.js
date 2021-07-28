@@ -12,7 +12,7 @@ const postSchema = new mongoose.Schema({
   price: { type: String },
   phone: { type: String },
   location: { type: String },
-  file: { type: String },
+  mail: { type: String },
 });
 
 module.exports = mongoose.model('Post', postSchema);
