@@ -42,7 +42,7 @@ router.put(`/posts/:id/edit`, async (req, res) => {
     } = req.body;
 
     const editedPost = await Post.findById(req.params.id);
-    console.log('editedPost',editedPost);
+    console.log('editedPost', editedPost);
     if (editedPost) {
       const changedPost = await Post.updateOne(
         { _id: req.params.id },
@@ -67,6 +67,44 @@ router.put(`/posts/:id/edit`, async (req, res) => {
     } else res.status(404).json({ message: 'Not found...' });
   } catch (err) {
     res.status(500).json({ message: err });
+  }
+});
+
+router.post('/posts/add', async (req, res) => {
+  try {
+    const {
+      title,
+      text,
+      author,
+      status,
+      price,
+      phone,
+      photo,
+      location,
+      created,
+      updated,
+      mail,
+    } = req.body;
+    const newPost = new Post({
+      title: title,
+      author: author,
+      created: created,
+      updated: updated,
+      status: status,
+      text: text,
+      photo: photo,
+      price: price,
+      phone: phone,
+      location: location,
+      mail: mail,
+    });
+
+    await newPost.save();
+    console.log(newPost);
+    if (!newPost) res.status(404).json({ post: 'Not found' });
+    else res.json(newPost);
+  } catch (err) {
+    res.status(500).json(`This error ${err}`);
   }
 });
 

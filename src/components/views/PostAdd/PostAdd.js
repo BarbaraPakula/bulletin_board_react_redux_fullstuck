@@ -36,56 +36,35 @@ class Component extends React.Component {
     },
   };
 
-  handleChange = (event) => {
+  updateTextField = ({ target }) => {
     const { post } = this.state;
+    const { name, value } = target;
 
-    this.setState({
-      post: { ...post, [event.target.name]: event.target.value },
-    });
+    this.setState({ post: { ...post, [name]: value } });
+  };
+
+  newDate = () => {
+    const dateObj = new Date();
+    const month = dateObj.getUTCMonth() + 1; //months from 1-12
+    const day = dateObj.getUTCDate();
+    const year = dateObj.getUTCFullYear();
+
+    let newdate = day + '/' + month + '/' + year;
+    return newdate;
   };
 
   submitForm = (e) => {
-    const { post } = this.state;
     e.preventDefault();
-
-    post.updated = new Date().toISOString();
-    const formData = new FormData();
-    console.log(post);
-
-    for (let key of [
-      'author',
-      'created',
-      'updated',
-      'status',
-      'title',
-      'text',
-      'price',
-      'phone',
-      'location',
-      'photo',
-    ]) {
-      formData.append(key, post[key]);
-    }
-
-    this.setState({
-      post: {
-        _id: '',
-        author: '',
-        created: '',
-        updated: '',
-        status: '',
-        title: '',
-        text: '',
-        photo: '',
-        price: '',
-        phone: '',
-        location: '',
-      },
-    });
-    alert('Your changes have been saved!');
+    const { post } = this.state;
+    const { addPost } = this.props;
+    this.setState({ post: { ...post,  created: this.newDate() } });
+    setTimeout(() => {
+      addPost(this.state.post);
+    }, 1000);
   };
 
   render() {
+    const { updateTextField, submitForm } = this;
     const { className, userStatus } = this.props;
     const { post } = this.state;
 
@@ -96,7 +75,7 @@ class Component extends React.Component {
           <Grid container align='center' justifyContent='center'>
             <Grid item align='center' xs={12} sm={9}>
               <Paper className={styles.form}>
-                <form onSubmit={this.submitForm}>
+                <form onSubmit={submitForm}>
                   <Typography variant='h6'>
                     Fill the fields to add an announcement
                   </Typography>
@@ -107,7 +86,7 @@ class Component extends React.Component {
                       name='title'
                       label='Title'
                       variant='filled'
-                      onChange={this.handleChange}
+                      onChange={updateTextField}
                       helperText='min. 10 characters'
                       fullWidth
                     />
@@ -118,7 +97,7 @@ class Component extends React.Component {
                       name='text'
                       label='Give the full description!'
                       variant='filled'
-                      onChange={this.handleChange}
+                      onChange={updateTextField}
                       helperText='min. 20 characters'
                       fullWidth
                     />
@@ -129,8 +108,19 @@ class Component extends React.Component {
                       name='author'
                       label='Your Email'
                       variant='filled'
-                      onChange={this.handleChange}
+                      onChange={updateTextField}
                       helperText='Put your vaild email'
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item align='center' xs={12} sm={9}>
+                    <TextField
+                      required
+                      name='photo'
+                      label='photo url'
+                      variant='filled'
+                      onChange={updateTextField}
+                      helperText='put your link to photo'
                       fullWidth
                     />
                   </Grid>
@@ -140,7 +130,7 @@ class Component extends React.Component {
                       name='location'
                       label='Location'
                       variant='filled'
-                      onChange={this.handleChange}
+                      onChange={updateTextField}
                       helperText='Location'
                       fullWidth
                     />
@@ -162,7 +152,18 @@ class Component extends React.Component {
                       name='phone'
                       label='Phone number'
                       variant='filled'
-                      onChange={this.handleChange}
+                      onChange={updateTextField}
+                      helperText='Give you contact number'
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item align='center' xs={12} sm={9}>
+                    <TextField
+                      required
+                      name='author'
+                      label='author'
+                      variant='filled'
+                      onChange={updateTextField}
                       helperText='Give you contact number'
                       fullWidth
                     />
@@ -173,7 +174,7 @@ class Component extends React.Component {
                       <Select
                         labelId='status'
                         id='status'
-                        onChange={this.handleChange}
+                        onChange={updateTextField}
                         fullWidth
                         variant='filled'
                         name='status'
@@ -219,6 +220,8 @@ class Component extends React.Component {
 Component.propTypes = {
   className: PropTypes.string,
   userStatus: PropTypes.bool,
+  addPost: PropTypes.func,
+
 };
 
 const mapStateToProps = (state, props) => ({

@@ -64,11 +64,10 @@ export const fetchPost = (id) => {
 
 export const fetchAddPost = (post) => {
   console.log('in fetch post', post);
+
   return (dispatch, getState) => {
     dispatch(fetchStarted());
-    Axios.post('http://localhost:8000/api/posts/add', post, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    })
+    Axios.post('http://localhost:8000/api/posts/add', post)
       .then((res) => {
         dispatch(addPost(post));
       })
@@ -82,16 +81,16 @@ export const fetchEditPost = (id, post) => {
   console.log('post w fetchEditPost', post);
   return (dispatch, getState) => {
     dispatch(fetchStarted());
-    Axios
-      .put(`http://localhost:8000/api/posts/${id}/edit`, post, {headers: {'Content-Type': 'multipart/form-data'}})
-      .then(res => {
+    Axios.put(`http://localhost:8000/api/posts/${id}/edit`, post, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+      .then((res) => {
         dispatch(editPost(id, post));
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch(fetchError(err.message || true));
         console.error(err);
       });
-
   };
 };
 
