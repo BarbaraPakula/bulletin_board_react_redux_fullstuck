@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import styles from './PostAdd.module.scss';
 import { connect } from 'react-redux';
 import { getStatus } from '../../../redux/userSwitcherRedux.js';
-import { fetchAddPost} from '../../../redux/postsRedux';
+import { fetchAddPost } from '../../../redux/postsRedux';
 
 import { NotFound } from '../NotFound/NotFound.js';
 
@@ -18,7 +18,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import ImageUploader from 'react-images-upload';
+// import ImageUploader from 'react-images-upload';
 
 class Component extends React.Component {
   state = {
@@ -36,14 +36,6 @@ class Component extends React.Component {
     },
   };
 
-  setPhoto = (files) => {
-    const { post } = this.state;
-    console.log(files[0]);
-
-    if (files) this.setState({ post: { ...post, photo: files[0] } });
-    else this.setState({ post: { ...post, photo: null } });
-  };
-
   handleChange = (event) => {
     const { post } = this.state;
 
@@ -56,62 +48,41 @@ class Component extends React.Component {
     const { post } = this.state;
     e.preventDefault();
 
-    let error = null;
-    const emailPattern = new RegExp(
-      '^[a-zA-Z0-9][a-zA-Z0-9_.-]+@[a-zA-Z0-9][a-zA-Z0-9_.-]+.{1,3}[a-zA-Z]{2,4}'
-    );
+    post.updated = new Date().toISOString();
+    const formData = new FormData();
+    console.log(post);
 
-    if (post.title.length < 10) {
-      alert('The title is too short');
-      error = 'text too short';
-    } else if (post.text.length < 20) {
-      alert('The content is too short');
-      error = 'text too short';
-    } else if (!emailPattern.test(post.author)) {
-      alert('Your email adress is not valid!');
-      error = 'wrong email';
+    for (let key of [
+      'author',
+      'created',
+      'updated',
+      'status',
+      'title',
+      'text',
+      'price',
+      'phone',
+      'location',
+      'photo',
+    ]) {
+      formData.append(key, post[key]);
     }
-    if (!error) {
-      post.updated = new Date().toISOString();
 
-      const formData = new FormData();
-
-      console.log(post);
-
-      for (let key of [
-        'author',
-        'created',
-        'updated',
-        'status',
-        'title',
-        'text',
-        'price',
-        'phone',
-        'location',
-        'photo',
-      ]) {
-        formData.append(key, post[key]);
-      }
-
-      this.setState({
-        post: {
-          _id: '',
-          author: '',
-          created: '',
-          updated: '',
-          status: '',
-          title: '',
-          text: '',
-          photo: '',
-          price: '',
-          phone: '',
-          location: '',
-        },
-      });
-      alert('Your changes have been saved!');
-    } else {
-      alert('Please correct errors before submitting changes!');
-    }
+    this.setState({
+      post: {
+        _id: '',
+        author: '',
+        created: '',
+        updated: '',
+        status: '',
+        title: '',
+        text: '',
+        photo: '',
+        price: '',
+        phone: '',
+        location: '',
+      },
+    });
+    alert('Your changes have been saved!');
   };
 
   render() {
@@ -215,7 +186,7 @@ class Component extends React.Component {
                       </Select>
                     </FormControl>
                   </Grid>
-                  <Grid item xs={12} sm={9} className={styles.paperCard__item}>
+                  {/* <Grid item xs={12} sm={9} className={styles.paperCard__item}>
                     <Typography align='center'>Add photo</Typography>
                     <ImageUploader
                       withIcon={true}
@@ -227,7 +198,7 @@ class Component extends React.Component {
                       singleImage={true}
                       className={styles.file}
                     />
-                  </Grid>
+                  </Grid> */}
                   <Grid item xs={12} sm={9} align='center'>
                     <Button variant='contained' type='submit' color='secondary'>
                       Submit
@@ -254,7 +225,7 @@ const mapStateToProps = (state, props) => ({
   userStatus: getStatus(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   addPost: (post) => dispatch(fetchAddPost(post)),
 });
 

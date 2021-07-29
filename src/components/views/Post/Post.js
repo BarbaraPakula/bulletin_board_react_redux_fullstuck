@@ -82,6 +82,16 @@ class Component extends React.Component {
                 {post.price} $
               </Typography>
             </div>
+            <div className={styles.postContact}>
+
+              <Typography
+                variant='body2'
+                component='p'
+                className={styles.author}
+              >
+                Author: {post.author}
+              </Typography>
+            </div>
 
             <div className={styles.postContact}>
               <MailOutlineIcon className={styles.contactIcon} />
@@ -90,7 +100,7 @@ class Component extends React.Component {
                 component='p'
                 className={styles.author}
               >
-                {post.email}
+                {post.mail}
               </Typography>
             </div>
 

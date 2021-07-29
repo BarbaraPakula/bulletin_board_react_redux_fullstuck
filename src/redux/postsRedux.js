@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+
 import Axios from 'axios';
 
 /* selectors */
@@ -81,15 +82,16 @@ export const fetchEditPost = (id, post) => {
   console.log('post w fetchEditPost', post);
   return (dispatch, getState) => {
     dispatch(fetchStarted());
-    Axios.put(`http://localhost:8000/api/posts/${id}/edit`, post, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    })
-      .then((res) => {
-        dispatch(editPost(post));
+    Axios
+      .put(`http://localhost:8000/api/posts/${id}/edit`, post, {headers: {'Content-Type': 'multipart/form-data'}})
+      .then(res => {
+        dispatch(editPost(id, post));
       })
-      .catch((err) => {
+      .catch(err => {
         dispatch(fetchError(err.message || true));
+        console.error(err);
       });
+
   };
 };
 
@@ -146,20 +148,13 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case EDIT_POST: {
-      const statePartIndex = statePart.data.findIndex(
-        (post) => post._id === action.payload._id
-      );
-      statePart.data.splice(statePartIndex, 1, action.payload);
-      console.log('action.payload', action.payload);
-
       return {
         ...statePart,
-        loading: {
-          active: false,
-          error: false,
-          changePost: true,
-        },
-        data: [...statePart.data],
+        data: [
+          ...statePart.data.map((post) =>
+            post._id === action.payload._id ? action.payload : post
+          ),
+        ],
       };
     }
     default:

@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NotFound } from '../NotFound/NotFound';
-import ImageUploader from 'react-images-upload';
+// import ImageUploader from 'react-images-upload';
 
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -57,41 +57,39 @@ class Component extends React.Component {
     console.log('this.state', this.state);
   };
 
-  handleImage = (files) => {
-    const { post } = this.state;
-    console.log('files', files[0].name);
+  // handleImage = (files) => {
+  //   const { post } = this.state;
+  //   console.log('files', files[0].name);
 
-    if (files !== undefined)
-      this.setState({ post: { ...post, photo: files[0].name } });
-  };
+  //   if (files !== undefined)
+  //     this.setState({ post: { ...post, photo: files[0].name } });
+  // };
 
   submitForm = (event) => {
     const { post } = this.state;
     const { editPost } = this.props;
     event.preventDefault();
 
-    if (post.title.length < 10) return alert('Min. 10 characters in title');
-    if (post.text.length < 20) return alert('Min. 20 characters in text');
-    if (post.price <= 0) return alert('Wrong price');
-    const authorPattern = new RegExp(
-      '^[a-zA-Z0-9][a-zA-Z0-9_.-]+@[a-zA-Z0-9][a-zA-Z0-9_.-]+.{1,3}[a-zA-Z]{2,4}'
-    );
-    const authorMatched = post.author.match(authorPattern);
-    const authorMatchedJoined = (authorMatched || []).join('');
-    if (authorMatchedJoined.length < post.author.length)
-      return alert('Wrong format email');
+    // if (post.title.length < 10) return alert('Min. 10 characters in title');
+    // if (post.text.length < 20) return alert('Min. 20 characters in text');
+    // if (post.price <= 0) return alert('Wrong price');
+    // const authorPattern = new RegExp(
+    //   '^[a-zA-Z0-9][a-zA-Z0-9_.-]+@[a-zA-Z0-9][a-zA-Z0-9_.-]+.{1,3}[a-zA-Z]{2,4}'
+    // );
+    // const authorMatched = post.mail.match(authorPattern);
+    // const authorMatchedJoined = (authorMatched || []).join('');
+    // if (authorMatchedJoined.length < post.mail.length)
+    //   return alert('Wrong format email');
 
-    if (
-      post.title.length > 9 &&
-      post.text.length > 19 &&
-      post.author.length === authorMatchedJoined.length
-    ) {
-      // post._id = uniqid();
-      post.updated = new Date().toISOString();
-      editPost(post._id, post);
+    // if (
+    //   post.title.length > 9 &&
+    //   post.text.length > 19 &&
+    //   post.mail.length === authorMatchedJoined.length
+    // ) {
+    post.updated = new Date().toISOString();
+    editPost(post._id, post);
 
-      alert('Your post was edit.');
-    }
+    // alert('Your post was edit.');
   };
 
   render() {
@@ -155,8 +153,18 @@ class Component extends React.Component {
                     <TextField
                       required
                       defaultValue={postById.mail}
-                      name='author'
+                      name='Email'
                       label='Email address'
+                      fullWidth
+                      onChange={this.handleChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={9} className={styles.paperCard__item}>
+                    <TextField
+                      required
+                      defaultValue={postById.author}
+                      name='author'
+                      label='Author'
                       fullWidth
                       onChange={this.handleChange}
                     />
@@ -202,13 +210,22 @@ class Component extends React.Component {
                     </FormHelperText>
                   </Grid>
                   <Grid item xs={12} sm={9} className={styles.paperCard__item}>
+                    <TextField
+                      defaultValue={postById.photo}
+                      name='photo'
+                      label='Photo url'
+                      fullWidth
+                      onChange={this.handleChange}
+                    />
+                  </Grid>
+                  {/* <Grid item xs={12} sm={9} className={styles.paperCard__item}>
                     <Typography variant='body1' gutterBottom align='center'>
                       Add photo
                     </Typography>
                     <Typography variant='body2' gutterBottom align='center'>
                       Your photo: {postById.photo}
-                    </Typography>
-                    <ImageUploader
+                    </Typography> */}
+                  {/* <ImageUploader
                       withIcon={true}
                       buttonText='Choose image'
                       imgExtension={['.jpg', '.gif', '.png', '.gif']}
@@ -217,8 +234,8 @@ class Component extends React.Component {
                       onChange={this.handleImage}
                       singleImage={true}
                       className={styles.file}
-                    />
-                  </Grid>
+                    /> */}
+                  {/* </Grid> */}
                   <Grid
                     item
                     xs={12}
